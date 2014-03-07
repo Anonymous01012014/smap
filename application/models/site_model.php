@@ -106,7 +106,12 @@ class Site_model extends CI_Model{
 	 * Modfication reason : ---
 	 * Author : Mohanad Kaleia
 	 * contact : ms.kaleia@gmail.com
+
+
 	 
+	 
+
+
 	 public function getSiteStatusForYear(){
 		$query = "select * from
 					site, status
@@ -122,6 +127,10 @@ class Site_model extends CI_Model{
 				  ";				  
 		$query = $this->db->query($query);
 		return $query->result_array();
+
+
 	 }*/ 
+
+
 	 	 	
 }
