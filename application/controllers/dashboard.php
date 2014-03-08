@@ -51,18 +51,18 @@ class Dashboard extends CI_Controller {
 		$sites = $this->site_model->getAllSites();
 		$data["sites"] = $sites; 
 			
-		print_r($sites);	
+		//print_r($sites);	
 				
-		//$json_sites = json_encode($sites);
+		$json_sites = json_encode($sites);
 		
-		//$data["json_sites"] = $json_sites;  
+		$data["json_sites"] = $json_sites;  
 					
 		//call the general views for page structure	
-		//$this->load->view('gen/header');
+		$this->load->view('gen/header');
 
-		//$this->load->view('dashboard' , $data);
+		$this->load->view('dashboard' , $data);
 		
-		//$this->load->view('gen/footer');		
+		$this->load->view('gen/footer');		
 	}
 	
 	
