@@ -42,7 +42,7 @@
 						foreach ($sites as $site) 
 						{
 					?>
-							<option value="<?php echo $site['id'];?>" onclick="alert('<?php $site['id'];?>');"><?php echo $site['name'];?></option>		
+							<option value="<?php echo $site['ID'];?>"><?php echo $site['Site_Name'];?></option>		
 					<?php	
 						}						
 					?>						
