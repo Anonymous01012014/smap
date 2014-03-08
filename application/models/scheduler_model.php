@@ -55,17 +55,18 @@ class Scheduler_model extends CI_Model{
 	 * contact : molham225@gamil.com
 	 */
 	 public function getOneYearInfoBySiteId(){
-		$query = "SELECT sc.GUID as id,
-						 sc.SiteID as site_id, 
-						 CONVERT(varchar,sc.DateTime,101) AS date,
-						 st.SchedulerStatus as status ,
-						 sc.Status as status_id ,
+		$query = "SELECT CONVERT(varchar,sc.DateTime,101) AS date,
+						 st.SchedulerStatus AS sc_status ,
+						 sc.Status AS status_id ,
 						 count(Status) AS count
 				  From Scheduler AS sc,SchedulerStatusCard AS st
 				  WHERE DateTime > DATEADD(year,-1,GETDATE()) 
-				  AND site_id = {$this->site_id}
+				  AND sc.SiteID = {$this->site_id}
 				  AND sc.Status = st.ID
-				  GROUP BY date,status;";
+				  GROUP BY CONVERT(varchar,sc.DateTime,101),
+						   sc.Status,
+						   st.SchedulerStatus
+				  ORDER BY date asc;";
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
