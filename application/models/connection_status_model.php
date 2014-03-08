@@ -1,7 +1,7 @@
 <?php if (!defined("BASEPATH")) exit("No direct script access allowed");
 
 /**
- * Class name : Connectiont_status
+ * Class name : Connection_status
  * 
  * Description :
  * This class contains functions to deal with the scheduler status card table (Add , Edit , Delete)
@@ -13,7 +13,7 @@
  * contact : molham225@gmail.com
  */    
 
-class Connectiont_status_model extends CI_Model{
+class Connection_status_model extends CI_Model{
 	/** Schduler class variables **/
 	//the string representation of the scheduler-site connection status
 	var $status = "";

@@ -88,48 +88,14 @@ class Site_model extends CI_Model{
 						schedulerStatusCard.ID = scheduler.status
 					AND 
 						scheduler.guid = (SELECT MAX(guid) FROM scheduler WHERE SiteID = {$this->id})			  
-				  ";				  
+				  ";	
+				  
+				  			  
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }		
 	 
-	
-	
-	/**
-	 * function name : getSiteStatusForYear
-	 * 
-	 * Description : 
-	 * Returns the status of a site for one year of successfule and unsuccessful access
-	 * 
-	 * Created date : 4-3-2014
-	 * Modification date : ---
-	 * Modfication reason : ---
-	 * Author : Mohanad Kaleia
-	 * contact : ms.kaleia@gmail.com
 
-
-	 
-	 
-
-
-	 public function getSiteStatusForYear(){
-		$query = "select * from
-					site, status
-					where
-					site.id = 3
-					and
-					site.id = status.site_id
-					and 
-					status.check_date > = DATE_ADD(CURDATE() , INTERVAL - 1 YEAR)
-					and 
-					status.check_date < = CURDATE();
-								  
-				  ";				  
-		$query = $this->db->query($query);
-		return $query->result_array();
-
-
-	 }*/ 
 
 
 	 	 	

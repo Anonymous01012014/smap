@@ -1,5 +1,3 @@
-
-
 /**
  * @author Mohanad Kaleia
  * 
@@ -10,25 +8,24 @@
  * created date : 19-2-2014  
  */
 
-function initialize()
+function showOklahomeMap(latitude, longitude)
 {
 	var mapProp = {
-	  center:new google.maps.LatLng(lat,long),
-	  zoom:7,
+	  center:new google.maps.LatLng(latitude,longitude),
+	  zoom:6,
 	  mapTypeId:google.maps.MapTypeId.ROADMAP
 	  };
 	  
-	var map=new google.maps.Map(document.getElementById("googleMap")
-	  ,mapProp);
+	
+	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 	  	 
-	
-	
+	return map;
+	/*
 	for( i = 0 ; i< sites.length ; i++)
 	{
 		addSiteToMap(url , map , sites[i]);	
 	}
-		
-	
+	*/
 	
 }
 
@@ -47,7 +44,7 @@ function initialize()
 
 function getSiteInfo(url , site_id)
 {	
-	
+
 	$.get(url + "/" + site_id , function(data){
 		
 		var site = jQuery.parseJSON(data);		
@@ -58,23 +55,26 @@ function getSiteInfo(url , site_id)
 		
 		//set the site data in the site information pane
 		
+		//site name		
+		$("#wim_name").html(site.Site_Name);
+		
 		//last response
-		$("#last_response").html(site.response_date);
+		$("#last_response").html(site.DateTime);
 		
 		//last check
-		$("#last_check").html(site.check_date);
+		$("#last_check").html(site.DateTime);
 		
 		//Result
-		$("#result").html("");
+		$("#result").html(site.SchedulerStatus);
 		
 		//signal
 		$("#signal").html(site.signal);
 		
 		//Latitude
-		$("#latitude").html(site.latitude);
+		$("#latitude").html(site.Site_Latitude);
 		
 		//longitude
-		$("#longitude").html(site.longitude);
+		$("#longitude").html(site.Site_Longitude);
 		
 	});	
 }
@@ -84,34 +84,80 @@ function getSiteInfo(url , site_id)
 
 
 /**
- * Function name : getSiteInfo
+ * Function name : addSiteToMap
  * Description: 
  * get site information by id and set it to the site info table
- * 
+ * parameres:
+ * url: the controller function that will get sites informations
+ * map: map object of google map
+ * site: 
  * created date: 4-2-2014
  * ccreated by: Eng. Ahmad Mulhem Barakat
  * contact: molham225@gmail.com 
  */
-function addSiteToMap(url , map , site){
+function addSiteToMap(url , map , site)
+{
+		
+		$.get(url , function(data){
+		
+			var site = jQuery.parseJSON(data);		
+			var marker = new Array();
+			//print a marker for each site
+			for(i = 0 ; i < site.length ; i++)
+			{
+				var markerPosition=new google.maps.LatLng(site[i]['Site_Latitude'] , site[i]['Site_Longitude']);
 	
-	var markerPosition=new google.maps.LatLng(site['latitude'] , site['longitude']);
-	
-	var marker=new google.maps.Marker({
-	  position:markerPosition,
-	  site_id: site['id']
-	  });
-	
-	marker.setMap(map);
-	
-	var infowindow = new google.maps.InfoWindow({
-	  content: site['name']
-	  });
-	
-	
-	google.maps.event.addListener(marker,'click',function() {
-		  map.setZoom(16);		  
-		  //get data from server as json and show it on screen
-		  getSiteInfo(url , site['id']);
-		  infowindow.open(map,marker);		  
-	  });
+				 marker[i]=new google.maps.Marker({
+				  position:markerPosition,
+				  site_id: site[i]['ID']
+				  });
+				
+				marker[i].setMap(map);
+				
+				var site_info = site[i];
+				
+				var infowindow = new google.maps.InfoWindow({
+				  content: site[i]['Site_Name']
+				  });				
+				
+				google.maps.event.addListener(marker[i],'click',function() {
+						map.setZoom(6);		  
+						alert(site_info["Site_Name"]);
+						//show site info in the right panel
+						alert(site[i]["Site_Name"]);
+						
+						//site name		
+						$("#wim_name").html(site[i]["Site_Name"]);
+						
+						//last response
+						$("#last_response").html(site[i]["DateTime"]);
+
+						//last check
+						$("#last_check").html(site[i]["DateTime"]);
+
+						//Result
+						$("#result").html(site[i]["SchedulerStatus"]);
+
+						//signal
+						$("#signal").html(site[i]["signal"]);
+
+						//Latitude
+						$("#latitude").html(site[i]["Site_Latitude"]);
+
+						//longitude
+						$("#longitude").html(site[i]["Site_Longitude"]);
+						
+						infowindow.open(map,marker[i]);		  
+					});
+			}
+		
+			
+			
+		});
+		
+		
+		
+		/*
+		
+	*/
 }

@@ -26,6 +26,7 @@
 	<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>js/grid.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
+
 	
 	<!-- This is a boot strap file upload js library
 		https://github.com/episage/bootstrap-3-pretty-file-upload

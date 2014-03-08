@@ -1,7 +1,7 @@
 <?php if (!defined("BASEPATH")) exit("No direct script access allowed");
 
 /**
- * Class name : Schduler
+ * Class name : Scheduler_model
  * 
  * Description :
  * This class contains functions to deal with the schduler table (Add , Edit , Delete)
@@ -13,20 +13,20 @@
  * contact : molham225@gmail.com
  */    
 
-class Schduler_model extends CI_Model{
+class Scheduler_model extends CI_Model{
 	/** Schduler class variables **/
 	
 	//this record id
-	$id="";
+	var $id="";
 	
 	//the id of the site for this record
-	$site_id="";
+	var $site_id="";
 	
 	//the date and time of this record's data
-	$date="";
+	var $date="";
 	
 	//current connection status for this site in this record
-	$status="";
+	var $status="";
 	
 	/**
      * Constructor

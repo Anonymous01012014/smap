@@ -89,6 +89,28 @@ class Dashboard extends CI_Controller {
 	}
 	
 	
+	/**
+	 * Function name : ajaxGetAllSites
+	 * Description: 
+	 * get all sites information to show it on the map as a marker
+	 * 
+	 * created date: 4-3-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function ajaxGetAllSites()
+	{
+		//load models
+		$this->load->model("site_model");
+		
+		//get all sites infromation from the database
+		$sites = $this->site_model->getAllSites();
+		
+		//return it as json encoded		
+		echo json_encode($sites);		
+	}
+	
+	
 }
 
 /* End of file welcome.php */

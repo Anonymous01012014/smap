@@ -2,12 +2,21 @@
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDczDfEHTE-O8noyduCL0zC1MDmVx_cJLU&sensor=false"></script>
 <script src="<?php echo base_url();?>js/site.js"></script>
 <script>
-	var site = "Oklahome";
-	var lat = 35.47278;
-	var long = -98.75722;
-	var url = "<?php echo base_url()."dashboard/ajaxGetSiteInfo";?>";
-	var sites = jQuery.parseJSON(<?php echo $json_sites;?>);
-	google.maps.event.addDomListener(window, 'load', initialize);
+	$( document ).ready(function() {
+		// Handler for .ready() called.
+		site = "Oklahome";
+		latitude = 35.47278;
+		longitude = -98.75722;				
+		//get Oklahome map
+		//google.maps.event.addDomListener(window, 'load', initialize);
+		oklahomeMap = showOklahomeMap(latitude , longitude);
+		
+		
+		//set WIM markers			
+		addSiteToMap("<?php echo base_url()."dashboard/ajaxGetAllSites";?>" , oklahomeMap);		
+	});
+	
+	
 </script>
 
 
@@ -29,7 +38,7 @@
 		        				site_id = $("#site_name").val();
 		        				
 		        				//get selected site information by id and set it to the site info
-		        				
+		        				var url = "<?php echo base_url()."dashboard/ajaxGetSiteInfo";?>";	
     							getSiteInfo(url , site_id);    							    							    							
     						}); 
 	        		});
@@ -51,6 +60,17 @@
 				<br/>
 				
 				<table class="table table-striped" style="margin-top:10px;">
+					<!-- site name -->	
+					<tr>
+						<td>
+							Site Name:			
+						</td>
+						
+						<td id="wim_name">
+							
+						</td>
+					</tr>
+					
 					<!-- last response -->	
 					<tr>
 						<td>

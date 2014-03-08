@@ -41,7 +41,7 @@ class Chart extends CI_Controller {
 		 /** prepare the site's data for charting **/
 		 $site = array();
 		 //adding series names
-		 for($i=0;$i<count($status_string)){
+		 for($i=0;$i<count($status_string); $i++){
 			$serie['name'] = $status_string[$i]['status'];
 			$site['series'][] = $serie;
 		 }
