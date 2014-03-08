@@ -61,8 +61,9 @@ class Chart extends CI_Controller {
 		 }
 		 
 		 //add information to the chart view
-		 $data['chart_data'] = json_encode($site);
-		 echo $data['chart_data'];
+		 $data['chart_data'] = $site;
+		 $this->load->view('chart',$data);
+		 //echo var_dump($site);
 		 
 	 }
 }

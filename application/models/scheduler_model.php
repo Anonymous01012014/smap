@@ -13,7 +13,7 @@
  * contact : molham225@gmail.com
  */    
 
-class Schduler_model extends CI_Model{
+class Scheduler_model extends CI_Model{
 	/** Schduler class variables **/
 	
 	//this record id
