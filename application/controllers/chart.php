@@ -51,7 +51,7 @@ class Chart extends CI_Controller {
 				$series = & $site['series'];
 				$serie = & $series[ $site_states[$i]['status_id'] ];
 				if($site['categories'][count($site['categories']) - 1] !== $site_states[$i]['date']){
-					for($j=0;$j<copunt($series);$j++){
+					for($j=0;$j<count($series);$j++){
 						$series[$j]['data'][] = 0;
 					}
 					$site['categories'][] = $site_states[$i]['date'];
