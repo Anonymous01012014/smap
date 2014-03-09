@@ -5,11 +5,12 @@ $(function () {
                 type: 'column'
             },
             title: {
-                text: 'Stacked column chart'
+                text: 'Site scheduler connection status percentage'
             },
             xAxis: {
                 categories: [
-								<?php for($i=0;$i<count($chart_data['categories']) - 1;$i++){
+								<?php  
+								for($i=0;$i<count($chart_data['categories']) - 1;$i++){
 											echo "'".$chart_data['categories'][$i]."',";
 										}
 										echo "'".$chart_data['categories'][count($chart_data['categories']) - 1]."'"; ?>
@@ -18,7 +19,7 @@ $(function () {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Site scheduler connection status percentage'
+                    text: 'percentage %'
                 }
             },
             tooltip: {
@@ -33,8 +34,11 @@ $(function () {
                 series: [
                 
                 <?php for($i=0;$i<count($chart_data['series']) - 1;$i++){
-							echo "{name: '".$chart_data['series'][$i]['name']."',
-								   data: [";
+							echo "{name: '".$chart_data['series'][$i]['name']."',";
+							if($i==0) echo "color: '#ABF59E',";
+							else
+								 echo "color: '#FF0000',";
+								 echo "  data: [";
 							for($j=0;$j<count($chart_data['series'][$i]['data']) - 1;$j++){
 								echo (int)$chart_data['series'][$i]['data'][$j].",";
 							}

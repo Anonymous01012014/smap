@@ -60,7 +60,7 @@ class Scheduler_model extends CI_Model{
 						 sc.Status AS status_id ,
 						 count(Status) AS count
 				  From Scheduler AS sc,SchedulerStatusCard AS st
-				  WHERE DateTime > DATEADD(year,-1,GETDATE()) 
+				  WHERE DateTime > DATEADD(year,-5,GETDATE()) 
 				  AND sc.SiteID = {$this->site_id}
 				  AND sc.Status = st.ID
 				  GROUP BY CONVERT(varchar,sc.DateTime,101),

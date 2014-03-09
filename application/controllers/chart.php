@@ -45,11 +45,22 @@ class Chart extends CI_Controller {
 			$serie['name'] = $status_string[$i]['status'];
 			$site['series'][] = $serie;
 		 }
-		 //adding cdates as categories and status counts as data
+		 $site['categories'] = array();
+		 //adding dates as categories and status counts as data
 		 for($i=0;$i<count($site_states);$i++){
-			if(isset($site['categories'][count($site['categories']) - 1])){
-				$series = & $site['series'];
-				$serie = & $series[ $site_states[$i]['status_id'] ];
+			 
+			 $series = & $site['series'];
+			 $serie = & $series[ $site_states[$i]['status_id'] -1];
+			 //if this is the first category add it
+			if(count($site['categories'] )== 0){
+				$site['categories'][] = $site_states[$i]['date'];
+				//add the serie information
+				for($j=0;$j<count($series);$j++){
+					$series[$j]['data'][] = 0;
+				}
+				$serie['data'][count($serie['data']) - 1] = $site_states[$i]['count'];
+			}else
+				//if the last inserted category != new date add it and initialize the corresponding series array's same index with zero values
 				if($site['categories'][count($site['categories']) - 1] !== $site_states[$i]['date']){
 					for($j=0;$j<count($series);$j++){
 						$series[$j]['data'][] = 0;
@@ -57,13 +68,14 @@ class Chart extends CI_Controller {
 					$site['categories'][] = $site_states[$i]['date'];
 				}
 				$serie['data'][count($serie['data']) - 1] = $site_states[$i]['count'];
-			}
 		 }
 		 
-		 //add information to the chart view
-		 $data['chart_data'] = $site;
-		 $this->load->view('chart',$data);
-		 //echo var_dump($site);
-		 
+		 if(isset($site['categories'][0])){
+			 //add information to the chart view
+			 $data['chart_data'] = $site;
+			 $this->load->view('gen/header');
+			 $this->load->view('chart',$data);
+			 //echo var_dump($site);
+		}
 	 }
 }

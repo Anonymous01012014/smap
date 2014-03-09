@@ -106,49 +106,62 @@ function addSiteToMap(url , map , site)
 			for(i = 0 ; i < site.length ; i++)
 			{
 				var markerPosition=new google.maps.LatLng(site[i]['Site_Latitude'] , site[i]['Site_Longitude']);
-	
+				var pinColor = 'FFFF00';
+				var pinIcon = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|dd5555",
+					null,null,null,new google.maps.Size(15, 30)
+								);
+					
+					var infowindow = new google.maps.InfoWindow({
+						maxWidth: 320
+							  });
 				 marker[i]=new google.maps.Marker({
 				  position:markerPosition,
-				  site_id: site[i]['ID']
+				  icon: pinIcon,
+				  siteId: site[i]['id']
 				  });
+				 
 				
 				marker[i].setMap(map);
 				
-				var site_info = site[i];
+								
 				
-				var infowindow = new google.maps.InfoWindow({
-				  content: site[i]['Site_Name']
-				  });				
-				
-				google.maps.event.addListener(marker[i],'click',function() {
-						map.setZoom(6);		  
-						alert(site_info["Site_Name"]);
+				google.maps.event.addListener(marker[i],'click',function(i) {
+								  
+						//alert(site_info["Site_Name"]);
 						//show site info in the right panel
-						alert(site[i]["Site_Name"]);
-						
-						//site name		
-						$("#wim_name").html(site[i]["Site_Name"]);
-						
-						//last response
-						$("#last_response").html(site[i]["DateTime"]);
+						//alert(site[i]["Site_Name"]);
+						return function(){
+							
+							  infowindow.setContent("<div style='min-width:150px;min-height:30px;'>"+site[i]['Site_Name']+"</div>");
+							  
+							
+							map.setZoom(6);
+							//site name		
+							$("#wim_name").html(site[i]["Site_Name"]);
+							
+							//last response
+							$("#last_response").html(site[i]["DateTime"]);
 
-						//last check
-						$("#last_check").html(site[i]["DateTime"]);
+							//last check
+							$("#last_check").html(site[i]["DateTime"]);
 
-						//Result
-						$("#result").html(site[i]["SchedulerStatus"]);
+							//Result
+							$("#result").html(site[i]["SchedulerStatus"]);
 
-						//signal
-						$("#signal").html(site[i]["signal"]);
+							//signal
+							$("#signal").html(site[i]["signal"]);
 
-						//Latitude
-						$("#latitude").html(site[i]["Site_Latitude"]);
+							//Latitude
+							$("#latitude").html(site[i]["Site_Latitude"]);
 
-						//longitude
-						$("#longitude").html(site[i]["Site_Longitude"]);
-						
-						infowindow.open(map,marker[i]);		  
-					});
+							//longitude
+							$("#longitude").html(site[i]["Site_Longitude"]);
+							
+							infowindow.open(map,marker[i]);	
+							//$('div#container').load('http://localhost:8080/smap/chart/oneYearChart/'+site[i]['id']);
+						}	  
+					}(i));
 			}
 		
 			
