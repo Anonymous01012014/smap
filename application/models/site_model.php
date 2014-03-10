@@ -57,8 +57,16 @@ class Site_model extends CI_Model{
 	 * contact : ms.kaleia@gmail.com
 	 */
 	 public function getAllSites(){
-		$query = "SELECT * 
-				  FROM site";
+		$query = "SELECT site.ID  , site.Site_Name , site.Site_Longitude , site.Site_Latitude ,  scheduler.DateTime , schedulerStatusCard.schedulerStatus 
+					FROM site, scheduler ,schedulerStatusCard
+					WHERE 						
+						site.id = scheduler.SiteID
+					AND
+						schedulerStatusCard.ID = scheduler.status
+					AND 
+						scheduler.guid = (SELECT MAX(guid) FROM scheduler WHERE SiteID = site.id)						
+					order by site.Site_Name asc							  
+				  ";
 				  
 		$query = $this->db->query($query);
 		return $query->result_array();
@@ -78,7 +86,7 @@ class Site_model extends CI_Model{
 	 * contact : ms.kaleia@gmail.com
 	 */
 	 public function getSitebyId(){
-		$query = "SELECT site.* , scheduler.* , schedulerStatusCard.*
+		$query = "SELECT site.ID  , site.Site_Name , site.Site_Longitude , site.Site_Latitude ,  scheduler.DateTime , schedulerStatusCard.schedulerStatus 
 					FROM site, scheduler ,schedulerStatusCard
 					WHERE 
 						site.id = {$this->id}

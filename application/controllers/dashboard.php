@@ -78,6 +78,7 @@ class Dashboard extends CI_Controller {
 	 */
 	public function ajaxGetSiteInfo($site_id)
 	{
+
 		//load models
 		$this->load->model("site_model");
 		

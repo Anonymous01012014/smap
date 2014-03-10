@@ -7,10 +7,8 @@
 		site = "Oklahome";
 		latitude = 35.47278;
 		longitude = -98.75722;				
-		//get Oklahome map
-		//google.maps.event.addDomListener(window, 'load', initialize);
+		//get Oklahome map		
 		oklahomeMap = showOklahomeMap(latitude , longitude);
-		
 		
 		//set WIM markers			
 		addSiteToMap("<?php echo base_url()."dashboard/ajaxGetAllSites";?>" , oklahomeMap);		
@@ -39,7 +37,9 @@
 		        				
 		        				//get selected site information by id and set it to the site info
 		        				var url = "<?php echo base_url()."dashboard/ajaxGetSiteInfo";?>";	
-    							getSiteInfo(url , site_id);    							    							    							
+    							getSiteInfo(url , site_id);
+    							
+    							new google.maps.event.trigger( marker[site_id], 'click' );    							    							    							
     						}); 
 	        		});
 			        
@@ -146,6 +146,6 @@
 
 <div class="clearfix"></div>
 
-<div id="container" class="col-md-10 col-md-offset-1" style="height:300px;">
-	
+<div id="container" class="col-md-10 col-md-offset-1">
+	<div id="site_chart"></div>
 </div>

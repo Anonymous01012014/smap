@@ -73,7 +73,7 @@ class Chart extends CI_Controller {
 		 if(isset($site['categories'][0])){
 			 //add information to the chart view
 			 $data['chart_data'] = $site;
-			 $this->load->view('gen/header');
+			 //$this->load->view('gen/header');
 			 $this->load->view('chart',$data);
 			 //echo var_dump($site);
 		}

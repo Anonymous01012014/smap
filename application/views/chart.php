@@ -1,8 +1,10 @@
 <script type="text/javascript">
+
 $(function () {
-        $('#container').highcharts({
+        $('#chart').highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                zoomType: 'x'
             },
             title: {
                 text: 'Site scheduler connection status percentage'
@@ -15,6 +17,8 @@ $(function () {
 										}
 										echo "'".$chart_data['categories'][count($chart_data['categories']) - 1]."'"; ?>
 							]
+					//type: 'datetime',
+					//maxZoom: 14 * 24 * 3600000 // two weeks
             },
             yAxis: {
                 min: 0,
@@ -33,11 +37,17 @@ $(function () {
             },
                 series: [
                 
-                <?php for($i=0;$i<count($chart_data['series']) - 1;$i++){
+                <?php
+                $start_date = explode("/",$chart_data['categories'][0]);
+                
+                 for($i=0;$i<count($chart_data['series']) - 1;$i++){
 							echo "{name: '".$chart_data['series'][$i]['name']."',";
 							if($i==0) echo "color: '#ABF59E',";
-							else
-								 echo "color: '#FF0000',";
+							//else
+								 //echo "color: '#FF0000',";
+								 ///echo "type: 'column',";
+								 //echo "pointInterval: 24 * 3600 * 1000,";
+								// echo "pointStart: Date.UTC(".$start_date[2].",".($start_date[0] - 1).",".$start_date[1]."),";
 								 echo "  data: [";
 							for($j=0;$j<count($chart_data['series'][$i]['data']) - 1;$j++){
 								echo (int)$chart_data['series'][$i]['data'][$j].",";
@@ -56,11 +66,11 @@ $(function () {
 					]
         });
     });
-    
+    	
 
 </script>
 
-<script src="<?php echo base_url();?>js/highcharts.js"></script>
-<script src="<?php echo base_url();?>js/exporting.js"></script>
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+

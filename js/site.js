@@ -8,6 +8,10 @@
  * created date : 19-2-2014  
  */
 
+//marker array
+var marker = new Array();
+
+
 function showOklahomeMap(latitude, longitude)
 {
 	var mapProp = {
@@ -19,14 +23,7 @@ function showOklahomeMap(latitude, longitude)
 	
 	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 	  	 
-	return map;
-	/*
-	for( i = 0 ; i< sites.length ; i++)
-	{
-		addSiteToMap(url , map , sites[i]);	
-	}
-	*/
-	
+	return map;	
 }
 
 
@@ -44,15 +41,12 @@ function showOklahomeMap(latitude, longitude)
 
 function getSiteInfo(url , site_id)
 {	
-
-	$.get(url + "/" + site_id , function(data){
-		
+	$.get(url + "/" + site_id , function(data){		
 		var site = jQuery.parseJSON(data);		
-		
 		
 		//get site with index 0
 		site = site[0];			
-		
+			
 		//set the site data in the site information pane
 		
 		//site name		
@@ -76,6 +70,9 @@ function getSiteInfo(url , site_id)
 		//longitude
 		$("#longitude").html(site.Site_Longitude);
 		
+		//show charts
+		//$("#site_chart").html("");		
+		//$('#site_chart').load('http://localhost:8080/smap/chart/oneYearChart/'+site.ID);
 	});	
 }
 
@@ -99,41 +96,43 @@ function addSiteToMap(url , map , site)
 {
 		
 		$.get(url , function(data){
-		
+			
+			//get all sites information
 			var site = jQuery.parseJSON(data);		
-			var marker = new Array();
+			
 			//print a marker for each site
 			for(i = 0 ; i < site.length ; i++)
 			{
+
 				var markerPosition=new google.maps.LatLng(site[i]['Site_Latitude'] , site[i]['Site_Longitude']);
 				var pinColor = 'FFFF00';
 				var pinIcon = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|dd5555",
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|4EC23D",
 					null,null,null,new google.maps.Size(15, 30)
 								);
 					
 					var infowindow = new google.maps.InfoWindow({
 						maxWidth: 320
 							  });
-				 marker[i]=new google.maps.Marker({
+				 marker[site[i]['ID']]=new google.maps.Marker({
 				  position:markerPosition,
 				  icon: pinIcon,
-				  siteId: site[i]['id']
+				  siteId: site[i]['ID']
 				  });
-				 
+	
 				
-				marker[i].setMap(map);
+				marker[site[i]['ID']].setMap(map);
 				
 								
 				
-				google.maps.event.addListener(marker[i],'click',function(i) {
+				google.maps.event.addListener(marker[site[i]['ID']],'click',function(i) {
 								  
 						//alert(site_info["Site_Name"]);
 						//show site info in the right panel
 						//alert(site[i]["Site_Name"]);
 						return function(){
 							
-							  infowindow.setContent("<div style='min-width:150px;min-height:30px;'>"+site[i]['Site_Name']+"</div>");
+							infowindow.setContent("<div style='min-width:150px;min-height:30px;'>"+site[i]['Site_Name']+"</div>");
 							  
 							
 							map.setZoom(6);
@@ -147,7 +146,7 @@ function addSiteToMap(url , map , site)
 							$("#last_check").html(site[i]["DateTime"]);
 
 							//Result
-							$("#result").html(site[i]["SchedulerStatus"]);
+							$("#result").html(site[i]["schedulerStatus"]);
 
 							//signal
 							$("#signal").html(site[i]["signal"]);
@@ -159,9 +158,12 @@ function addSiteToMap(url , map , site)
 							$("#longitude").html(site[i]["Site_Longitude"]);
 							
 							infowindow.open(map,marker[i]);	
-							//$('div#container').load('http://localhost:8080/smap/chart/oneYearChart/'+site[i]['id']);
+							
+							//show charts
+							$("#site_chart").html("");
+							$('#site_chart').load('http://localhost:8080/smap/chart/oneYearChart/'+site[i]['ID']);
 						}	  
-					}(i));
+					}(site[i]['ID']));
 			}
 		
 			
