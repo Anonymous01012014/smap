@@ -3,6 +3,9 @@
 <script src="<?php echo base_url();?>js/site.js"></script>
 <script>
 	$( document ).ready(function() {
+		//base url
+		var base_url = "<?php echo base_url();?>";
+		
 		// Handler for .ready() called.
 		site = "Oklahome";
 		latitude = 35.47278;

@@ -70,9 +70,7 @@ function getSiteInfo(url , site_id)
 		//longitude
 		$("#longitude").html(site.Site_Longitude);
 		
-		//show charts
-		//$("#site_chart").html("");		
-		//$('#site_chart').load('http://localhost:8080/smap/chart/oneYearChart/'+site.ID);
+		
 	});	
 }
 
@@ -161,7 +159,7 @@ function addSiteToMap(url , map , site)
 							
 							//show charts
 							$("#site_chart").html("");
-							$('#site_chart').load('http://localhost:8080/smap/chart/oneYearChart/'+site[i]['ID']);
+							$('#site_chart').load(base_url +'chart/oneYearChart/'+site[i]['ID']);
 							
 							//remove the selected item from the sites list
 							//$('#site_name option:contains("'+site_id+'")').prop('selected', true);
