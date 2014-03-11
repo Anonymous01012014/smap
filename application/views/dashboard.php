@@ -46,7 +46,7 @@
 			        
 			    </script>
 				<select  name="site_name" id="site_name">
-					<option value="----"></option>
+					<option value="0"></option>
 					<?php 
 						foreach ($sites as $site) 
 						{

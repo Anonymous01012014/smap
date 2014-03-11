@@ -120,21 +120,18 @@ function addSiteToMap(url , map , site)
 				  siteId: site[i]['ID']
 				  });
 	
-				
-				marker[site[i]['ID']].setMap(map);
+				site_id = site[i]['ID'];
+				marker[site_id.toString()].setMap(map);
 				
 								
 				
-				google.maps.event.addListener(marker[site[i]['ID']],'click',function(i) {
+				google.maps.event.addListener(marker[site_id.toString()],'click',function(i) {
 								  
-						//alert(site_info["Site_Name"]);
 						//show site info in the right panel
-						//alert(site[i]["Site_Name"]);
 						return function(){
 							
 							infowindow.setContent("<div style='min-width:150px;min-height:30px;'>"+site[i]['Site_Name']+"</div>");
-							  
-							
+							  							
 							map.setZoom(6);
 							//site name		
 							$("#wim_name").html(site[i]["Site_Name"]);
@@ -157,13 +154,19 @@ function addSiteToMap(url , map , site)
 							//longitude
 							$("#longitude").html(site[i]["Site_Longitude"]);
 							
-							infowindow.open(map,marker[i]);	
+							
+							var site_id = site[i]['ID'];
+							
+							infowindow.open(map,marker[site_id.toString()]);	
 							
 							//show charts
 							$("#site_chart").html("");
 							$('#site_chart').load('http://localhost:8080/smap/chart/oneYearChart/'+site[i]['ID']);
+							
+							//remove the selected item from the sites list
+							//$('#site_name option:contains("'+site_id+'")').prop('selected', true);
 						}	  
-					}(site[i]['ID']));
+					}(i));
 			}
 		
 			
