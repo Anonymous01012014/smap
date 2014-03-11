@@ -2,10 +2,11 @@
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDczDfEHTE-O8noyduCL0zC1MDmVx_cJLU&sensor=false"></script>
 <script src="<?php echo base_url();?>js/site.js"></script>
 <script>
-	$( document ).ready(function() {
-		//base url
-		var base_url = "<?php echo base_url();?>";
-		
+//base url
+var base_url = "<?php echo base_url();?>";
+</script>
+<script>
+	$( document ).ready(function() {		
 		// Handler for .ready() called.
 		site = "Oklahome";
 		latitude = 35.47278;
